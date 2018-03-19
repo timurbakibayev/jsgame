@@ -16,7 +16,8 @@ class Hero {
     }
 
     jump() {
-        this.dy = - gravity * 10;
+        if (!this.jumping)
+            this.dy = - gravity * 10;
     }
 
     update() {
@@ -28,12 +29,14 @@ class Hero {
 
         this.dy = Math.min(this.dy + gravity, 10);
         this.y += this.dy;
+        this.jumping = true;
         bricks.forEach((brick)=> {
             if ((brick.x <= this.x && this.x < brick.x + c) ||
                 (brick.x <= this.x + this.width && this.x + this.width < brick.x + c)) {
-                if (this.y + this.height > brick.y) {
+                if ((this.y + this.height > brick.y) && (this.y - this.dy + this.height <= brick.y)) {
                     this.y = brick.y - this.height;
                     this.dy = 0;
+                    this.jumping = false;
                 }
             }
         });

@@ -3,6 +3,8 @@ class Brick {
         this.x = x;
         this.y = y;
         this.color = color;
+        this.width = width;
+        this.height = height;
     }
     draw () {
         ctx.fillStyle = this.color;

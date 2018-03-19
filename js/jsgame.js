@@ -1,12 +1,13 @@
 const gravity = 2;
 let c = 10;
 let bricks = [];
+let balls = [];
 let interval = null;
 let hero = null;
 let canvas = null;
 let ctx = null;
 
-window.addEventListener('keydown', function (e) {
+function keyDownHandler(e) {
     console.log("you pressed", e.keyCode);
     if (e.keyCode === 37) {
         hero.going_left = true;
@@ -19,7 +20,17 @@ window.addEventListener('keydown', function (e) {
     if (e.keyCode === 38) {
         hero.jump();
     }
-});
+    if (e.keyCode === 32) {
+        let ball = new Ball(hero.x + hero.width / 2, hero.y + hero.height / 2);
+        ball.dy = -15;
+        ball.dx = hero.looking * 10;
+        if (hero.dx !== 0)
+            ball.dx = ball.dx * 2;
+        balls.push(ball);
+    }
+}
+
+window.addEventListener('keydown', keyDownHandler);
 
 window.addEventListener('keyup', function (e) {
     if (e.keyCode === 37) {
@@ -41,10 +52,15 @@ function startGame() {
                 bricks.push(new Brick(c, c, "red", j * c, i * c));
             }
         }
-    interval = setInterval(()=>{update(ctx)}, 100);
+    interval = setInterval(()=>{update(ctx)}, 40);
 }
 
 function update() {
+    balls.forEach((ball) => {
+        ball.update();
+        if ((Math.abs(ball.dx) < 1) && (Math.abs(ball.dy) < 1))
+            balls.splice(balls.indexOf(ball),1)
+    });
     hero.update(bricks);
     drawAll();
 }
@@ -52,5 +68,6 @@ function update() {
 function drawAll() {
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     bricks.forEach((brick) => brick.draw());
+    balls.forEach((ball) => ball.draw());
     hero.draw();
 }
