@@ -35,7 +35,8 @@ class Ball {
             }
         })
     }
+    
     draw () {
-        ctx.drawImage(this.img,0,0,38,38,this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.img,this.x, this.y, this.width, this.height);
     }
 }

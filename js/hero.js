@@ -4,8 +4,10 @@ class Hero {
         this.y = y;
         this.dy = 0;
         this.dx = 0;
-        this.img = new Image();
-        this.img.src = "png/rocky_left_right.png";
+        this.img_left = new Image();
+        this.img_left.src = "png/rocky_left.png";
+        this.img_right = new Image();
+        this.img_right.src = "png/rocky_right.png";
         this.pic = 0;
         this.width = c;
         this.height = this.width * 10 / 7;
@@ -40,6 +42,11 @@ class Hero {
                 }
             }
         });
+        if (this.y > canvas.height) {
+            alert("Game Over :(");
+            document.location.reload();
+        }
+
 
         if (this.going_left) {
             this.dx = Math.max(this.dx - 1, -10);
@@ -51,9 +58,33 @@ class Hero {
         } else if (this.dx > 0) {
             this.dx -= 1;
         }
+
         this.x += this.dx;
+
+        bricks.forEach((brick)=> {
+            if ((this.y <= brick.y && brick.y < this.y + this.height) ||
+                (this.y < brick.y + brick.height && brick.y + brick.height < this.y + c)) {
+                if ((this.x + this.width > brick.x) && (this.x - this.dx + this.width <= brick.x)) {
+                    this.x = brick.x - this.width;
+                    this.dx = 0;
+                }
+            }
+
+            if ((this.y <= brick.y && brick.y < this.y + this.height) ||
+                (this.y < brick.y + brick.height && brick.y + brick.height < this.y + c)) {
+                if ((this.x < brick.x + brick.width) && (this.x - this.dx >= brick.x + brick.width)) {
+                    this.x = brick.x + brick.width;
+                    this.dx = 0;
+                }
+            }
+        });
+
+
     }
     draw () {
-        ctx.drawImage(this.img,145 * this.pic,0,138,200,  this.x, this.y, this.width, this.height);
+        if (this.looking === 1)
+            ctx.drawImage(this.img_right,this.x, this.y, this.width, this.height);
+        else
+            ctx.drawImage(this.img_left,this.x, this.y, this.width, this.height);
     }
 }

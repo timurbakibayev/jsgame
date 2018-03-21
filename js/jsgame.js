@@ -30,9 +30,9 @@ function keyDownHandler(e) {
     }
 }
 
-window.addEventListener('keydown', keyDownHandler);
+document.addEventListener('keydown', keyDownHandler);
 
-window.addEventListener('keyup', function (e) {
+document.addEventListener('keyup', function (e) {
     if (e.keyCode === 37) {
         hero.going_left = false;
     }
