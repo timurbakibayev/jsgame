@@ -14,6 +14,8 @@ class Brick {
         //ctx.rect(this.x, this.y, c, c);
         ctx.moveTo(this.x, this.y);
         ctx.lineTo(this.x + this.width, this.y);
+        ctx.moveTo(this.x, this.y + this.height);
+        ctx.lineTo(this.x + this.width, this.y + this.height);
 
         ctx.moveTo(this.x, this.y + this.height/2);
         ctx.lineTo(this.x + this.width, this.y + this.height/2);

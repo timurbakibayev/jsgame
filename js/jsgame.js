@@ -17,6 +17,9 @@ function keyDownHandler(e) {
         hero.going_right = true;
         hero.looking = 1;
     }
+    if (e.keyCode === 40) {
+        hero.sit();
+    }
     if (e.keyCode === 38) {
         hero.jump();
     }
@@ -35,6 +38,9 @@ document.addEventListener('keydown', keyDownHandler);
 document.addEventListener('keyup', function (e) {
     if (e.keyCode === 37) {
         hero.going_left = false;
+    }
+    if (e.keyCode === 40) {
+        hero.standUp();
     }
     if (e.keyCode === 39) {
         hero.going_right = false;
